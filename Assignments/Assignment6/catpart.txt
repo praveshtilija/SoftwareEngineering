@@ -1,0 +1,72 @@
+# File
+  Size:
+	  Empty.					[single][property emptyfile]
+	  Not empty.
+	
+  Number of occurencences of the string in the file:
+	  None.						[single][if !emptyfile] [property noOccurences]			
+      One.						[single][if !emptyfile]
+      Many.						[if !emptyfile]
+	  
+  Number of occurrences of the string in one line:	  
+	  One.						[if !emptyfile && !noOccurences]
+      Many.						[if !emptyfile && !noOccurences]
+	  
+  Position of the string in the file:
+	  First line.				[if !emptyfile && !noOccurences]
+      Last line.				[if !emptyfile && !noOccurences]
+      Any.						[if !emptyfile && !noOccurences]
+
+# OPT
+  Number of command line arguments:
+	  Zero.						[single] [property emptyOPT]
+	  More than one.
+  
+  Command line argument for -b:
+	  -b was typed				[if !emptyOPT]
+	  -b was not typed			[if !emptyOPT]
+	
+  Command line argument for -f:
+	  -f was typed				[if !emptyOPT && lastOccurence] [property firstOccurence]
+	  -f was not typed			[if !emptyOPT]
+	  
+  Command line argument for -l:
+	  -l was typed				[if !emptyOPT && !firstOccurence] [property lastOccurence]
+	  -l was not typed			[if !emptyOPT]
+	  
+  Command line argument for -i:
+	  -i was typed				[if !emptyOPT]
+	  -i was not typed			[if !emptyOPT]
+	
+# NumOfFiles
+  Number of files given:
+	  Zero.						[error] [property zeroFiles]
+	  One.						[single] 
+	  Many.	
+	
+# FileExists
+  Does the specified files exist:
+	  True.						[single][if !zeroFiles] [property fileExists]
+	  False.					[error][if !zeroFiles]
+	  	
+# StringFrom
+  Length of string:
+	  Zero.						[single][if !zeroFiles && fileExists] [property zeroLengthTo]
+	  Any size.					[if !zeroFiles && fileExists] [property moreThanZeroTo]
+	  Too big exceeding limit	[error]
+	  
+  Content of string:
+	  Alphanumeric chars.		[!zeroLengthTo]
+	  Special characters.		[!zeroLengthTo]
+	  Spaces.					[!zeroLengthTo]
+	  
+# StringTo
+  Length of string:
+	  Zero.						[single] [if !zeroFiles && fileExists] [property zeroLengthFrom]
+	  Any size.					[if !zeroFiles && fileExists] [property moreThanZeroFrom]
+	  Too big exceeding limit	[error]
+	  
+  Content of string:
+	  Alphanumeric chars.		[!zeroLengthFrom]
+	  Special characters.		[!zeroLengthFrom]
+	  Spaces.					[!zeroLengthFrom]
